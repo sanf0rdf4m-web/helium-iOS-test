@@ -42,6 +42,7 @@ targets:
     scheme:
       testTargets:
         - HeliumTests
+        - HeliumUITests
   HeliumTests:
     type: bundle.unit-test
     platform: iOS
@@ -52,4 +53,15 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: computer.helium.community.browser.tests
+        GENERATE_INFOPLIST_FILE: YES
+  HeliumUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: Helium
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: computer.helium.community.browser.uitests
         GENERATE_INFOPLIST_FILE: YES

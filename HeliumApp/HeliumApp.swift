@@ -8,7 +8,8 @@ struct HeliumApp: App {
         WindowGroup {
             BrowserRootView()
                 .environmentObject(browser)
-                .tint(Color(red: 0.20, green: 0.31, blue: 0.82))
+                .tint(HeliumTheme.accent)
+                .preferredColorScheme(.dark)
         }
     }
 }

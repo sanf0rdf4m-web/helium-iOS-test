@@ -50,6 +50,17 @@
                ReferencedContainer = "container:Helium.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2AC1E0D7D51D1EFDB77722E5"
+               BuildableName = "HeliumUITests.xctest"
+               BlueprintName = "HeliumUITests"
+               ReferencedContainer = "container:Helium.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

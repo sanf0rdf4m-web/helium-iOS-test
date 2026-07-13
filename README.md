@@ -1,6 +1,6 @@
 # Helium for iPhone and iPad
 
-An **unofficial community port** of the Helium browser experience, rebuilt in SwiftUI for iOS and iPadOS. It keeps the compact Helium-style interface, private tabs, local `!bang` shortcuts, and a Brave-Shields-style privacy panel while using Apple's supported WebKit engine.
+An **unofficial community port** of the Helium browser experience, rebuilt in SwiftUI for iOS and iPadOS. Its dark vertical-tab shell, compact omnibox, new-tab page, settings, and blocker panel are matched directly against the desktop Helium app while using Apple's supported WebKit engine.
 
 > This project is not created, reviewed, or endorsed by imput LLC or the official Helium project. “Helium” and the upstream mark identify the intended compatibility port. Get written brand permission or rename the app before an App Store release.
 
@@ -8,9 +8,14 @@ An **unofficial community port** of the Helium browser experience, rebuilt in Sw
 | --- | --- |
 | <img src="Docs/iphone-new-tab.png" alt="Helium new tab on iPhone" width="260"> | <img src="Docs/ipad-new-tab.png" alt="Helium new tab on iPad" width="520"> |
 
+| Settings | Shields |
+| --- | --- |
+| <img src="Docs/ipad-settings.png" alt="Helium settings on iPad" width="520"> | <img src="Docs/ipad-shields.png" alt="Helium Shields on iPad" width="520"> |
+
 ## What works
 
-- iPhone and iPad layouts with adaptive top/bottom browser chrome
+- Adaptive Helium vertical tabs: expanded desktop-style rail on wide iPads, collapsed rail and slide-out drawer on iPhone and compact iPad windows
+- Dark Chromium-density toolbar, rounded web-content frame, empty Helium new-tab state, and embedded `helium://settings` surface
 - Multiple persistent tabs and non-persistent private tabs
 - iPad two-page split view
 - Address/search field with HTTPS-first navigation and common local `!bangs`
@@ -51,6 +56,8 @@ Run the platform-independent tests with:
 ```sh
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test
 ```
+
+The checked-in `HeliumUITests` target verifies the vertical-tab shell, settings route, and Shields panel on an iPad simulator.
 
 `Config/ios-ci.yml.example` can be copied to `.github/workflows/ios.yml` to enable the included CI checks. GitHub credentials need `workflow` scope for that path.
 

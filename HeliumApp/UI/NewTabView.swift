@@ -9,150 +9,73 @@ struct NewTabView: View {
     @State private var shortcutName = ""
     @State private var shortcutAddress = ""
 
-    private let defaultShortcuts: [QuickLink] = [
-        QuickLink(
-            title: "Cover Your Tracks",
-            symbol: "hand.raised.fingers.spread.fill",
-            tint: Color(red: 0.08, green: 0.33, blue: 0.22),
-            address: "https://coveryourtracks.eff.org"
-        ),
-        QuickLink(
-            title: "PrivacyTests.org",
-            symbol: "checkmark",
-            tint: Color(red: 0.08, green: 0.72, blue: 0.02),
-            address: "https://privacytests.org"
-        ),
-        QuickLink(
-            title: "Browserleaks",
-            symbol: "touchid",
-            tint: Color(red: 0.10, green: 0.10, blue: 0.11),
-            address: "https://browserleaks.com"
-        ),
-        QuickLink(
-            title: "Homepage",
-            asset: "HeliumMark",
-            address: "https://helium.computer"
-        ),
-        QuickLink(
-            title: "Techlore",
-            symbol: "lock.shield.fill",
-            tint: Color(red: 0.03, green: 0.20, blue: 0.27),
-            address: "https://techlore.tech"
-        )
-    ]
-
     var body: some View {
         GeometryReader { proxy in
-            let layout = ShortcutLayout(width: proxy.size.width)
-
             ScrollView {
-                VStack(spacing: 0) {
-                    Spacer(minLength: 32)
-                    shortcutGrid(layout: layout)
-                    Spacer(minLength: 32)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: proxy.size.height)
+                shortcutGrid(width: proxy.size.width)
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: proxy.size.height)
             }
             .scrollBounceBehavior(.basedOnSize)
             .overlay(alignment: .bottomTrailing) {
-                Button {
-                    presentShortcutEditor()
-                } label: {
+                Button(action: presentShortcutEditor) {
                     Image(systemName: "pencil")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(Color(red: 0.02, green: 0.11, blue: 0.23))
-                        .frame(width: 34, height: 34)
-                        .background(
-                            Color(red: 0.835, green: 0.89, blue: 0.996),
-                            in: Circle()
-                        )
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(HeliumTheme.primaryText)
+                        .frame(width: 32, height: 32)
+                        .background(HeliumTheme.accent, in: Circle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Customize shortcuts")
-                .padding(16)
+                .accessibilityLabel("Customize this page")
+                .padding(14)
             }
         }
-        .background(Color(red: 0.992, green: 0.973, blue: 0.984))
+        .background(HeliumTheme.content)
         .sheet(isPresented: $isAddingShortcut) {
             shortcutEditor
+                .presentationDetents([.height(310)])
+                .presentationBackground(HeliumTheme.raised)
         }
     }
 
-    private func shortcutGrid(layout: ShortcutLayout) -> some View {
-        LazyVGrid(columns: layout.columns, spacing: layout.rowSpacing) {
-            ForEach(defaultShortcuts + customShortcuts) { link in
-                shortcutButton(link, width: layout.itemWidth)
-            }
+    @ViewBuilder
+    private func shortcutGrid(width: CGFloat) -> some View {
+        let count = width >= 760 ? 6 : width >= 500 ? 4 : 3
+        let itemWidth: CGFloat = 96
+        let spacing: CGFloat = 12
+        let columns = Array(repeating: GridItem(.fixed(itemWidth), spacing: spacing), count: count)
 
-            Button {
-                presentShortcutEditor()
-            } label: {
-                shortcutLabel(
-                    title: "Add shortcut",
-                    symbol: "plus",
-                    asset: nil,
-                    tint: Color(red: 0.02, green: 0.11, blue: 0.23),
-                    width: layout.itemWidth
-                )
+        if customShortcuts.isEmpty {
+            Button(action: presentShortcutEditor) {
+                ShortcutLabel(title: "Add shortcut", symbol: "plus")
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Add shortcut")
+        } else {
+            LazyVGrid(columns: columns, spacing: 24) {
+                ForEach(customShortcuts) { shortcut in
+                    shortcutButton(shortcut)
+                }
+
+                Button(action: presentShortcutEditor) {
+                    ShortcutLabel(title: "Add shortcut", symbol: "plus")
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Add shortcut")
+            }
+            .frame(maxWidth: (CGFloat(count) * itemWidth) + (CGFloat(count - 1) * spacing))
+            .padding(.horizontal, 16)
         }
-        .frame(maxWidth: layout.gridWidth)
-        .padding(.horizontal, 16)
     }
 
-    private func shortcutButton(_ link: QuickLink, width: CGFloat) -> some View {
+    private func shortcutButton(_ shortcut: QuickLink) -> some View {
         Button {
-            browser.navigate(link.address, in: tab)
+            browser.navigate(shortcut.address, in: tab)
         } label: {
-            shortcutLabel(
-                title: link.title,
-                symbol: link.symbol,
-                asset: link.asset,
-                tint: link.tint,
-                width: width
-            )
+            ShortcutLabel(title: shortcut.title, symbol: "globe")
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(link.title)
-    }
-
-    private func shortcutLabel(
-        title: String,
-        symbol: String?,
-        asset: String?,
-        tint: Color,
-        width: CGFloat
-    ) -> some View {
-        VStack(spacing: 10) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 9, style: .continuous)
-                    .fill(Color(red: 0.898, green: 0.89, blue: 0.89))
-
-                if let asset {
-                    Image(asset)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                } else if let symbol {
-                    Image(systemName: symbol)
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundStyle(tint)
-                }
-            }
-            .frame(width: 48, height: 48)
-
-            Text(title)
-                .font(.system(size: 14, weight: .regular))
-                .foregroundStyle(Color(red: 0.07, green: 0.07, blue: 0.08))
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .frame(maxWidth: width)
-        }
-        .frame(width: width)
-        .contentShape(Rectangle())
+        .accessibilityLabel(shortcut.title)
     }
 
     private var shortcutEditor: some View {
@@ -166,26 +89,26 @@ struct NewTabView: View {
                     .autocorrectionDisabled()
                     .keyboardType(.URL)
             }
+            .scrollContentBackground(.hidden)
+            .background(HeliumTheme.raised)
             .navigationTitle("Add shortcut")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        isAddingShortcut = false
-                    }
+                    Button("Cancel") { isAddingShortcut = false }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
-                        addShortcut()
-                    }
-                    .disabled(
-                        shortcutName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-                        shortcutAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                    )
+                    Button("Add", action: addShortcut)
+                        .disabled(!canAddShortcut)
                 }
             }
         }
-        .presentationDetents([.medium])
+        .environment(\.colorScheme, .dark)
+    }
+
+    private var canAddShortcut: Bool {
+        !shortcutName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            !shortcutAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private func presentShortcutEditor() {
@@ -195,63 +118,45 @@ struct NewTabView: View {
     }
 
     private func addShortcut() {
-        let name = shortcutName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let address = shortcutAddress.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty, !address.isEmpty else { return }
-
+        guard canAddShortcut else { return }
         customShortcuts.append(
             QuickLink(
-                title: name,
-                symbol: "globe",
-                tint: Color(red: 0.02, green: 0.11, blue: 0.23),
-                address: address
+                title: shortcutName.trimmingCharacters(in: .whitespacesAndNewlines),
+                address: shortcutAddress.trimmingCharacters(in: .whitespacesAndNewlines)
             )
         )
         isAddingShortcut = false
     }
 }
 
-private struct QuickLink: Identifiable {
-    let id = UUID()
+private struct ShortcutLabel: View {
     let title: String
-    let symbol: String?
-    let asset: String?
-    let tint: Color
-    let address: String
+    let symbol: String
 
-    init(
-        title: String,
-        symbol: String? = nil,
-        asset: String? = nil,
-        tint: Color = .primary,
-        address: String
-    ) {
-        self.title = title
-        self.symbol = symbol
-        self.asset = asset
-        self.tint = tint
-        self.address = address
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: symbol)
+                .font(.system(size: 18, weight: .regular))
+                .foregroundStyle(HeliumTheme.primaryText)
+                .frame(width: 40, height: 40)
+                .background(
+                    HeliumTheme.tile,
+                    in: RoundedRectangle(cornerRadius: 7, style: .continuous)
+                )
+
+            Text(title)
+                .font(.system(size: 12.5))
+                .foregroundStyle(HeliumTheme.primaryText)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(width: 96)
+        }
+        .contentShape(Rectangle())
     }
 }
 
-private struct ShortcutLayout {
-    let itemWidth: CGFloat
-    let gridWidth: CGFloat
-    let rowSpacing: CGFloat
-    let columns: [GridItem]
-
-    init(width: CGFloat) {
-        let count = width >= 600 ? 6 : 3
-        let spacing: CGFloat = width >= 600 ? 12 : 10
-        let availableWidth = min(width - 32, width >= 600 ? 680 : width - 32)
-        let itemWidth = min(102, (availableWidth - (CGFloat(count - 1) * spacing)) / CGFloat(count))
-
-        self.itemWidth = itemWidth
-        self.gridWidth = availableWidth
-        self.rowSpacing = 28
-        self.columns = Array(
-            repeating: GridItem(.fixed(itemWidth), spacing: spacing, alignment: .top),
-            count: count
-        )
-    }
+private struct QuickLink: Identifiable {
+    let id = UUID()
+    let title: String
+    let address: String
 }

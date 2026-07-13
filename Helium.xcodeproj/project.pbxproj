@@ -14,6 +14,7 @@
 		334097CBF97F0006A8E4B8F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3143137C771DBE7CD7B3558 /* Assets.xcassets */; };
 		38398638E9D7E5E09F2645A4 /* AddressResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50096D72F6B2B48408382F1 /* AddressResolutionTests.swift */; };
 		4280B27620CFFEB179C223BB /* HeliumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EFBE7BED0F3BBA47459D6B /* HeliumApp.swift */; };
+		4632AA8E8BD51453CD44C168 /* HeliumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A8C40C988C11205CC71B4E /* HeliumUITests.swift */; };
 		48BEEC5F5BCC408C5A76C65C /* BrowserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AD316C93D4022BABFD182 /* BrowserStore.swift */; };
 		5603CBED9A427EA6A7A5DC13 /* AddressResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1954F33D499D2FD626825BB0 /* AddressResolution.swift */; };
 		6401A66A0D94E0633D84BDE5 /* Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF21823C90C0B22D0466F7C /* Privacy.swift */; };
@@ -21,6 +22,7 @@
 		729DCAB48CC96CEA99CE95FE /* NewTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0B4E32A728255D20EA611E /* NewTabView.swift */; };
 		94B6DEF162B837CA71ABD291 /* BrowserRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A52387B27997B5CC08E76F2 /* BrowserRootView.swift */; };
 		95AA530B97D37C2A32101E15 /* PrivacyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB054A17749E42FDC1F69A94 /* PrivacyTests.swift */; };
+		974CAE19D56AB944FE40B736 /* HeliumTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3242C6A3B13DB9E8BF322E /* HeliumTheme.swift */; };
 		99E54A09C0D628E2F6ED8A1B /* HeliumCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCC94E97E4C17A8D5FB7B29 /* HeliumCore.framework */; };
 		B5B6E0C1BC1D5413CC260C4D /* HeliumCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CDCC94E97E4C17A8D5FB7B29 /* HeliumCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BC68238ED6E7470762BF627D /* BrowserTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF0492A83D4E6E769F541C9 /* BrowserTab.swift */; };
@@ -33,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2BC3722AC1A0591BD33DD0E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B44CFF4C428985AB4A3195DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8FFC16D8763E3E2814B9D16A;
+			remoteInfo = Helium;
+		};
 		9570754F53C7213861A1A411 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B44CFF4C428985AB4A3195DF /* Project object */;
@@ -78,6 +87,7 @@
 		01B59A5DA9FAC2EDDA3B0598 /* Helium.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Helium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0456E71384D5365A830F1233 /* HeliumTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HeliumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07A3F8B8EA7068D647EEA1B1 /* ShieldsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldsPanel.swift; sourceTree = "<group>"; };
+		08A8C40C988C11205CC71B4E /* HeliumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumUITests.swift; sourceTree = "<group>"; };
 		1954F33D499D2FD626825BB0 /* AddressResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResolution.swift; sourceTree = "<group>"; };
 		1A52387B27997B5CC08E76F2 /* BrowserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserRootView.swift; sourceTree = "<group>"; };
 		27A8C67EEA33D3B3A7CC81F5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -87,6 +97,7 @@
 		7BE666DA7F68C58898E1BB60 /* BrowserWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserWebView.swift; sourceTree = "<group>"; };
 		A4EFBE7BED0F3BBA47459D6B /* HeliumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumApp.swift; sourceTree = "<group>"; };
 		AD0B4E32A728255D20EA611E /* NewTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTabView.swift; sourceTree = "<group>"; };
+		AD3242C6A3B13DB9E8BF322E /* HeliumTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeliumTheme.swift; sourceTree = "<group>"; };
 		BB054A17749E42FDC1F69A94 /* PrivacyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTests.swift; sourceTree = "<group>"; };
 		BFF0492A83D4E6E769F541C9 /* BrowserTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserTab.swift; sourceTree = "<group>"; };
 		C69301479BB36B7CAD316C64 /* TabStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStrip.swift; sourceTree = "<group>"; };
@@ -94,6 +105,7 @@
 		DBFFA06448207DCE60BD176C /* LibraryModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModelsTests.swift; sourceTree = "<group>"; };
 		DC345A2A17817FE7B9716A09 /* LibraryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModels.swift; sourceTree = "<group>"; };
 		DC82CB7EE3299A3473ED7259 /* BrowserChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChrome.swift; sourceTree = "<group>"; };
+		DD8BD0131C94AF88CDCEF1FC /* HeliumUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HeliumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFF21823C90C0B22D0466F7C /* Privacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Privacy.swift; sourceTree = "<group>"; };
 		E3143137C771DBE7CD7B3558 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F50096D72F6B2B48408382F1 /* AddressResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResolutionTests.swift; sourceTree = "<group>"; };
@@ -145,6 +157,7 @@
 				566CAD148436678890A0B63D /* HeliumApp */,
 				1FBC663BDA6FE6D5E4875A66 /* HeliumCore */,
 				5C7FC0E5DA0A4CD9A6D4809F /* HeliumCoreTests */,
+				6EF871AD931B108F68D8ABB4 /* UITests */,
 				366EB31D2C5A6513353FBED3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -155,6 +168,7 @@
 				01B59A5DA9FAC2EDDA3B0598 /* Helium.app */,
 				CDCC94E97E4C17A8D5FB7B29 /* HeliumCore.framework */,
 				0456E71384D5365A830F1233 /* HeliumTests.xctest */,
+				DD8BD0131C94AF88CDCEF1FC /* HeliumUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +200,7 @@
 			children = (
 				DC82CB7EE3299A3473ED7259 /* BrowserChrome.swift */,
 				1A52387B27997B5CC08E76F2 /* BrowserRootView.swift */,
+				AD3242C6A3B13DB9E8BF322E /* HeliumTheme.swift */,
 				769819B7A9120A27F129AB6E /* LibraryView.swift */,
 				AD0B4E32A728255D20EA611E /* NewTabView.swift */,
 				5B2321DC939B3C7D5C2FD6D7 /* SettingsView.swift */,
@@ -193,6 +208,14 @@
 				C69301479BB36B7CAD316C64 /* TabStrip.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		6EF871AD931B108F68D8ABB4 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				08A8C40C988C11205CC71B4E /* HeliumUITests.swift */,
+			);
+			path = UITests;
 			sourceTree = "<group>";
 		};
 		E78BC8280F116843AF909E5F /* Browser */ = {
@@ -208,6 +231,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2AC1E0D7D51D1EFDB77722E5 /* HeliumUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2AA93F868632B422DF8B3036 /* Build configuration list for PBXNativeTarget "HeliumUITests" */;
+			buildPhases = (
+				F6B9417BEC168A7299D17266 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BA3012E7FA1A34C2DABCA02A /* PBXTargetDependency */,
+			);
+			name = HeliumUITests;
+			packageProductDependencies = (
+			);
+			productName = HeliumUITests;
+			productReference = DD8BD0131C94AF88CDCEF1FC /* HeliumUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		7A0E40050F0C63877FEE46C5 /* HeliumTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88A74E9721B4E929112A3A0B /* Build configuration list for PBXNativeTarget "HeliumTests" */;
@@ -275,6 +316,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					2AC1E0D7D51D1EFDB77722E5 = {
+						TestTargetID = 8FFC16D8763E3E2814B9D16A;
+					};
 					8FFC16D8763E3E2814B9D16A = {
 						ProvisioningStyle = Automatic;
 					};
@@ -297,6 +341,7 @@
 				8FFC16D8763E3E2814B9D16A /* Helium */,
 				954B9C990811A9ADA1FEF116 /* HeliumCore */,
 				7A0E40050F0C63877FEE46C5 /* HeliumTests */,
+				2AC1E0D7D51D1EFDB77722E5 /* HeliumUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -324,6 +369,7 @@
 				BC68238ED6E7470762BF627D /* BrowserTab.swift in Sources */,
 				05B1FECDE4D4BFD62408DDEC /* BrowserWebView.swift in Sources */,
 				4280B27620CFFEB179C223BB /* HeliumApp.swift in Sources */,
+				974CAE19D56AB944FE40B736 /* HeliumTheme.swift in Sources */,
 				0930AB3ADA1117D9AC06D06F /* LibraryView.swift in Sources */,
 				729DCAB48CC96CEA99CE95FE /* NewTabView.swift in Sources */,
 				F8C6B9BD855A26AC3AA4169C /* SettingsView.swift in Sources */,
@@ -352,6 +398,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F6B9417BEC168A7299D17266 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4632AA8E8BD51453CD44C168 /* HeliumUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -364,6 +418,11 @@
 			isa = PBXTargetDependency;
 			target = 954B9C990811A9ADA1FEF116 /* HeliumCore */;
 			targetProxy = 9570754F53C7213861A1A411 /* PBXContainerItemProxy */;
+		};
+		BA3012E7FA1A34C2DABCA02A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8FFC16D8763E3E2814B9D16A /* Helium */;
+			targetProxy = 2BC3722AC1A0591BD33DD0E3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -406,6 +465,23 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		60FDD445F58B1B2FA40B0981 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = computer.helium.community.browser.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Helium;
+			};
+			name = Debug;
 		};
 		719191D0C97280DDA3BE148F /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -609,6 +685,23 @@
 			};
 			name = Debug;
 		};
+		FD853678C6D5E98536D73C76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = computer.helium.community.browser.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Helium;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -626,6 +719,15 @@
 			buildConfigurations = (
 				9DD8104A5469839D9AF53A7B /* Debug */,
 				A811C2204A405325CC636E1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2AA93F868632B422DF8B3036 /* Build configuration list for PBXNativeTarget "HeliumUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				60FDD445F58B1B2FA40B0981 /* Debug */,
+				FD853678C6D5E98536D73C76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
