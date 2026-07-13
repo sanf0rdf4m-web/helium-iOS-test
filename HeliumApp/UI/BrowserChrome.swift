@@ -9,20 +9,41 @@ struct BrowserChrome: View {
     @Binding var sheet: BrowserSheet?
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 7) {
             if placement == .top {
                 navigationButtons
+                Spacer(minLength: 4)
             }
 
             AddressField(tab: tab)
                 .environmentObject(browser)
+                .frame(maxWidth: 680)
+
+            if placement == .top { Spacer(minLength: 4) }
+            trailingControls
+        }
+        .frame(height: 38)
+        .buttonStyle(.plain)
+        .foregroundStyle(Color(uiColor: .label))
+    }
+
+    private var trailingControls: some View {
+        HStack(spacing: 3) {
+            if placement == .bottom {
+                Button(action: tab.reloadOrStop) {
+                    chromeIcon(tab.isLoading ? "xmark" : "arrow.clockwise")
+                }
+                .accessibilityLabel(tab.isLoading ? "Stop" : "Reload")
+            }
 
             Button {
                 sheet = .shields
             } label: {
                 Image(systemName: browser.shieldsAreEnabled(for: tab.url) ? "shield.fill" : "shield.slash")
+                    .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(browser.shieldsAreEnabled(for: tab.url) ? Color.red : .secondary)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 30, height: 32)
+                    .contentShape(Rectangle())
             }
             .accessibilityLabel("Privacy shields")
 
@@ -30,6 +51,9 @@ struct BrowserChrome: View {
                 Button("New Tab", systemImage: "plus") { browser.newTab() }
                 Button("New Private Tab", systemImage: "hand.raised") { browser.newTab(isPrivate: true) }
                 Divider()
+                Button(tab.isLoading ? "Stop Loading" : "Reload", systemImage: tab.isLoading ? "xmark" : "arrow.clockwise") {
+                    tab.reloadOrStop()
+                }
                 Button("Bookmarks and History", systemImage: "books.vertical") { sheet = .library }
                 if let url = tab.url {
                     ShareLink(item: url)
@@ -48,45 +72,46 @@ struct BrowserChrome: View {
                 Divider()
                 Button("Settings", systemImage: "gearshape") { sheet = .settings }
             } label: {
-                Image(systemName: "ellipsis")
-                    .rotationEffect(.degrees(90))
-                    .frame(width: 28, height: 28)
+                chromeIcon("ellipsis", rotation: 90)
             }
             .accessibilityLabel("Browser menu")
 
-            if placement == .bottom {
-                Button {
-                    browser.newTab()
-                } label: {
-                    Image(systemName: "plus")
-                        .frame(width: 28, height: 28)
-                }
-                .accessibilityLabel("New tab")
+            Button {
+                browser.newTab()
+            } label: {
+                chromeIcon("plus")
             }
+            .accessibilityLabel("New tab")
         }
     }
 
     private var navigationButtons: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 3) {
             Button(action: tab.goBack) {
-                Image(systemName: "chevron.left").frame(width: 28, height: 28)
+                chromeIcon("chevron.left")
             }
             .disabled(!tab.canGoBack)
             .accessibilityLabel("Back")
 
             Button(action: tab.goForward) {
-                Image(systemName: "chevron.right").frame(width: 28, height: 28)
+                chromeIcon("chevron.right")
             }
             .disabled(!tab.canGoForward)
             .accessibilityLabel("Forward")
 
             Button(action: tab.reloadOrStop) {
-                Image(systemName: tab.isLoading ? "xmark" : "arrow.clockwise")
-                    .frame(width: 28, height: 28)
+                chromeIcon(tab.isLoading ? "xmark" : "arrow.clockwise")
             }
             .accessibilityLabel(tab.isLoading ? "Stop" : "Reload")
         }
-        .buttonStyle(.plain)
+    }
+
+    private func chromeIcon(_ systemName: String, rotation: Double = 0) -> some View {
+        Image(systemName: systemName)
+            .font(.system(size: 15, weight: .medium))
+            .rotationEffect(.degrees(rotation))
+            .frame(width: 30, height: 32)
+            .contentShape(Rectangle())
     }
 }
 
@@ -98,10 +123,16 @@ private struct AddressField: View {
 
     var body: some View {
         HStack(spacing: 7) {
-            Image(systemName: securityIcon)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
+            Image(systemName: "slider.horizontal.3")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Color(uiColor: .secondaryLabel))
+                .frame(width: 18, height: 18)
+                .accessibilityHidden(true)
+
             TextField("Search or enter address", text: $text)
+                .font(.system(size: 15, weight: .regular))
+                .foregroundStyle(Color(uiColor: .label))
+                .multilineTextAlignment(isFocused ? .leading : .center)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .keyboardType(.webSearch)
@@ -117,29 +148,41 @@ private struct AddressField: View {
                 .onChange(of: tab.url) { _, _ in
                     if !isFocused { text = displayText }
                 }
+
             if isFocused, !text.isEmpty {
                 Button {
                     text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.secondary)
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                        .frame(width: 20, height: 20)
                 }
                 .buttonStyle(.plain)
-            } else if tab.url != nil {
-                Button(action: tab.reloadOrStop) {
-                    Image(systemName: tab.isLoading ? "xmark" : "arrow.clockwise")
-                        .font(.caption.weight(.semibold))
+                .accessibilityLabel("Clear address")
+            } else {
+                Button {
+                    browser.toggleBookmark(for: tab)
+                } label: {
+                    Image(systemName: isBookmarked ? "star.fill" : "star")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(isBookmarked ? Color.yellow : Color(uiColor: .secondaryLabel))
+                        .frame(width: 20, height: 20)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(tab.isLoading ? "Stop" : "Reload")
+                .disabled(tab.url == nil)
+                .accessibilityLabel(isBookmarked ? "Remove bookmark" : "Add bookmark")
             }
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 10)
         .frame(minHeight: 38)
-        .background(Color(uiColor: .secondarySystemFill), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
+        .background(
+            Color(red: 0.91, green: 0.91, blue: 0.91),
+            in: RoundedRectangle(cornerRadius: 11, style: .continuous)
+        )
         .overlay {
             RoundedRectangle(cornerRadius: 11, style: .continuous)
-                .stroke(isFocused ? Color.accentColor.opacity(0.55) : .clear, lineWidth: 1.5)
+                .stroke(isFocused ? Color.black.opacity(0.24) : Color.black.opacity(0.055), lineWidth: 1)
         }
         .onAppear { text = displayText }
     }
@@ -149,8 +192,8 @@ private struct AddressField: View {
         return url.host(percentEncoded: false) ?? url.absoluteString
     }
 
-    private var securityIcon: String {
-        guard let url = tab.url else { return "magnifyingglass" }
-        return url.scheme == "https" ? "lock.fill" : "exclamationmark.triangle.fill"
+    private var isBookmarked: Bool {
+        guard let url = tab.url else { return false }
+        return browser.isBookmarked(url)
     }
 }

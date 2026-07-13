@@ -5,32 +5,46 @@ struct TabStrip: View {
     var compact = false
 
     var body: some View {
-        ScrollViewReader { reader in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: compact ? 5 : 7) {
-                    ForEach(browser.tabs) { tab in
-                        TabPill(tab: tab, compact: compact)
+        GeometryReader { geometry in
+            ScrollViewReader { reader in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(Array(browser.tabs.enumerated()), id: \.element.id) { index, tab in
+                            TabPill(
+                                tab: tab,
+                                compact: compact,
+                                showsSeparator: index < browser.tabs.count - 1
+                            )
                             .environmentObject(browser)
+                            .frame(width: tabWidth(in: geometry.size.width))
                             .id(tab.id)
+                        }
                     }
-                    Button {
-                        browser.newTab()
-                    } label: {
-                        Image(systemName: "plus")
-                            .frame(width: 32, height: 32)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("New tab")
+                    .frame(minWidth: geometry.size.width - 14, alignment: .leading)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
                 }
-                .padding(.horizontal, 9)
-                .padding(.vertical, compact ? 5 : 4)
-            }
-            .onChange(of: browser.selectedTabID) { _, id in
-                guard let id else { return }
-                withAnimation { reader.scrollTo(id, anchor: .center) }
+                .onChange(of: browser.selectedTabID) { _, id in
+                    guard let id else { return }
+                    withAnimation(.easeInOut(duration: 0.18)) {
+                        reader.scrollTo(id, anchor: .center)
+                    }
+                }
             }
         }
+        .frame(height: 41)
         .background(Color(uiColor: .systemBackground))
+    }
+
+    private func tabWidth(in availableWidth: CGFloat) -> CGFloat {
+        let count = max(CGFloat(browser.tabs.count), 1)
+        let reservedWidth: CGFloat = 14
+        let proposed = (availableWidth - reservedWidth) / count
+
+        if compact {
+            return min(260, max(112, proposed))
+        }
+        return min(220, max(128, proposed))
     }
 }
 
@@ -38,35 +52,48 @@ private struct TabPill: View {
     @EnvironmentObject private var browser: BrowserStore
     @ObservedObject var tab: BrowserTab
     let compact: Bool
+    let showsSeparator: Bool
 
     private var selected: Bool { browser.selectedTabID == tab.id }
 
     var body: some View {
         HStack(spacing: 7) {
-            Image(systemName: tab.isPrivate ? "hand.raised.fill" : "globe")
-                .font(.caption)
-                .foregroundStyle(tab.isPrivate ? Color.purple : .secondary)
+            favicon
+
             Text(tab.title)
-                .font(.subheadline)
+                .font(.system(size: compact ? 13 : 14, weight: .regular))
+                .foregroundStyle(Color(uiColor: .label))
                 .lineLimit(1)
-                .frame(maxWidth: compact ? 118 : 180, alignment: .leading)
-            Button {
-                browser.close(tab)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.caption2.weight(.bold))
-                    .frame(width: 20, height: 20)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            if selected {
+                Button {
+                    browser.close(tab)
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 10.5, weight: .semibold))
+                        .frame(width: 20, height: 20)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Close \(tab.title)")
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Close \(tab.title)")
         }
         .padding(.leading, 10)
-        .padding(.trailing, 6)
-        .frame(height: 34)
+        .padding(.trailing, selected ? 6 : 10)
+        .frame(height: 35)
         .background(
-            selected ? Color(uiColor: .secondarySystemFill) : Color.clear,
-            in: RoundedRectangle(cornerRadius: 9, style: .continuous)
+            selected ? Color(red: 0.91, green: 0.91, blue: 0.91) : Color.clear,
+            in: RoundedRectangle(cornerRadius: 7, style: .continuous)
         )
+        .overlay(alignment: .trailing) {
+            if showsSeparator && !selected {
+                Rectangle()
+                    .fill(Color.black.opacity(0.11))
+                    .frame(width: 0.5, height: 22)
+            }
+        }
         .contentShape(Rectangle())
         .onTapGesture { browser.select(tab) }
         .accessibilityElement(children: .contain)
@@ -76,5 +103,35 @@ private struct TabPill: View {
                 browser.openInSplitView(tab)
             }
         }
+    }
+
+    @ViewBuilder
+    private var favicon: some View {
+        if tab.url == nil {
+            Image("HeliumGlyph")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 16, height: 16)
+        } else if let faviconURL = tab.faviconURL {
+            AsyncImage(url: faviconURL) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                } else {
+                    fallbackFavicon
+                }
+            }
+            .frame(width: 16, height: 16)
+        } else {
+            fallbackFavicon
+        }
+    }
+
+    private var fallbackFavicon: some View {
+        Image(systemName: "globe")
+            .font(.system(size: 12, weight: .medium))
+            .foregroundStyle(Color(uiColor: .secondaryLabel))
+            .frame(width: 16, height: 16)
     }
 }

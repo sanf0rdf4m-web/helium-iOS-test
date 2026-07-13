@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		05B1FECDE4D4BFD62408DDEC /* BrowserWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE666DA7F68C58898E1BB60 /* BrowserWebView.swift */; };
 		0930AB3ADA1117D9AC06D06F /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769819B7A9120A27F129AB6E /* LibraryView.swift */; };
+		2E727FEC833AA330B1C99D97 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 27A8C67EEA33D3B3A7CC81F5 /* PrivacyInfo.xcprivacy */; };
 		31F1A88F7C7BF4F1E49294A7 /* LibraryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC345A2A17817FE7B9716A09 /* LibraryModels.swift */; };
+		334097CBF97F0006A8E4B8F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3143137C771DBE7CD7B3558 /* Assets.xcassets */; };
 		38398638E9D7E5E09F2645A4 /* AddressResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50096D72F6B2B48408382F1 /* AddressResolutionTests.swift */; };
 		4280B27620CFFEB179C223BB /* HeliumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EFBE7BED0F3BBA47459D6B /* HeliumApp.swift */; };
 		48BEEC5F5BCC408C5A76C65C /* BrowserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AD316C93D4022BABFD182 /* BrowserStore.swift */; };
@@ -78,6 +80,7 @@
 		07A3F8B8EA7068D647EEA1B1 /* ShieldsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldsPanel.swift; sourceTree = "<group>"; };
 		1954F33D499D2FD626825BB0 /* AddressResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResolution.swift; sourceTree = "<group>"; };
 		1A52387B27997B5CC08E76F2 /* BrowserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserRootView.swift; sourceTree = "<group>"; };
+		27A8C67EEA33D3B3A7CC81F5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		527AD316C93D4022BABFD182 /* BrowserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserStore.swift; sourceTree = "<group>"; };
 		5B2321DC939B3C7D5C2FD6D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		769819B7A9120A27F129AB6E /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		DC345A2A17817FE7B9716A09 /* LibraryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModels.swift; sourceTree = "<group>"; };
 		DC82CB7EE3299A3473ED7259 /* BrowserChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChrome.swift; sourceTree = "<group>"; };
 		DFF21823C90C0B22D0466F7C /* Privacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Privacy.swift; sourceTree = "<group>"; };
+		E3143137C771DBE7CD7B3558 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F50096D72F6B2B48408382F1 /* AddressResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressResolutionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02AB42759DBA037A9680C1AA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E3143137C771DBE7CD7B3558 /* Assets.xcassets */,
+				27A8C67EEA33D3B3A7CC81F5 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1FBC663BDA6FE6D5E4875A66 /* HeliumCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +164,7 @@
 			children = (
 				A4EFBE7BED0F3BBA47459D6B /* HeliumApp.swift */,
 				E78BC8280F116843AF909E5F /* Browser */,
+				02AB42759DBA037A9680C1AA /* Resources */,
 				65DD164215E3504306C8DF59 /* UI */,
 			);
 			path = HeliumApp;
@@ -219,6 +233,7 @@
 			buildConfigurationList = 25006E1CE7BF2922623B866F /* Build configuration list for PBXNativeTarget "Helium" */;
 			buildPhases = (
 				0E560656755365E008DA7DE1 /* Sources */,
+				E9E1A93827E64F6FC9EC38A9 /* Resources */,
 				B8B01B26155C724B535E3FD8 /* Frameworks */,
 				3DAFFF65FB4A1E40A6BD9580 /* Embed Frameworks */,
 			);
@@ -285,6 +300,18 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E9E1A93827E64F6FC9EC38A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				334097CBF97F0006A8E4B8F5 /* Assets.xcassets in Resources */,
+				2E727FEC833AA330B1C99D97 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0E560656755365E008DA7DE1 /* Sources */ = {

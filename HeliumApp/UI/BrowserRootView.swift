@@ -38,28 +38,14 @@ struct BrowserRootView: View {
     @ViewBuilder
     private func browserView(tab: BrowserTab) -> some View {
         VStack(spacing: 0) {
-            if isWide {
-                BrowserChrome(tab: tab, placement: .top, sheet: $sheet)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 7)
-                TabStrip()
-                    .environmentObject(browser)
-                Divider()
-            } else {
-                TabStrip(compact: true)
-                    .environmentObject(browser)
-                Divider()
-            }
+            BrowserChrome(tab: tab, placement: .top, sheet: $sheet)
+                .padding(.horizontal, isWide ? 10 : 6)
+                .padding(.vertical, 5)
+            TabStrip(compact: !isWide)
+                .environmentObject(browser)
+            Divider()
 
             BrowserWorkspace(primaryTab: tab, splitTab: isWide ? browser.splitTab : nil)
-
-            if !isWide {
-                Divider()
-                BrowserChrome(tab: tab, placement: .bottom, sheet: $sheet)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
-                    .background(.ultraThinMaterial)
-            }
         }
     }
 }
@@ -118,6 +104,12 @@ private struct BrowserPage: View {
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .overlay {
+            if isPad {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(Color.primary.opacity(0.13), lineWidth: 0.75)
+            }
+        }
         .padding(isPad ? 6 : 0)
     }
 

@@ -16,6 +16,7 @@ final class BrowserTab: NSObject, ObservableObject, Identifiable {
     @Published var estimatedProgress = 0.0
     @Published var isLoading = false
     @Published var lastError: String?
+    @Published var faviconURL: URL?
 
     var onNavigation: ((BrowserTab, URL, String) -> Void)?
     var onOpenWindow: ((URL) -> Void)?
@@ -58,6 +59,7 @@ final class BrowserTab: NSObject, ObservableObject, Identifiable {
 
     func load(_ url: URL) {
         self.url = url
+        faviconURL = nil
         lastError = nil
         guard privacyConfigured else {
             pendingURL = url
@@ -199,6 +201,15 @@ extension BrowserTab: WKNavigationDelegate {
         guard let url = webView.url else { return }
         let resolvedTitle = webView.title?.nilIfEmpty ?? url.host ?? url.absoluteString
         onNavigation?(self, url, resolvedTitle)
+        Task {
+            let script = "Array.from(document.querySelectorAll('link[rel~=icon]')).map(link => link.href).filter(Boolean).pop() || ''"
+            guard let value = try? await webView.evaluateJavaScript(script) as? String,
+                  let favicon = URL(string: value),
+                  ["http", "https"].contains(favicon.scheme?.lowercased() ?? "") else {
+                return
+            }
+            faviconURL = favicon
+        }
     }
 
     func webView(

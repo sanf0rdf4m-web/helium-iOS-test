@@ -27,10 +27,6 @@ targets:
     platform: iOS
     sources:
       - path: HeliumApp
-        excludes:
-          - Resources
-    resources:
-      - path: HeliumApp/Resources
     dependencies:
       - target: HeliumCore
     settings:

@@ -2,7 +2,7 @@
 
 An **unofficial community port** of the Helium browser experience, rebuilt in SwiftUI for iOS and iPadOS. It keeps the compact Helium-style interface, private tabs, local `!bang` shortcuts, and a Brave-Shields-style privacy panel while using Apple's supported WebKit engine.
 
-> This project is not created, reviewed, or endorsed by imput LLC or the official Helium project. “Helium” is used here to identify the intended compatibility port. The included icon is original and no official Helium brand assets are redistributed. Get written brand permission or rename the app before an App Store release.
+> This project is not created, reviewed, or endorsed by imput LLC or the official Helium project. “Helium” and the upstream mark identify the intended compatibility port. Get written brand permission or rename the app before an App Store release.
 
 | iPhone | iPad |
 | --- | --- |
