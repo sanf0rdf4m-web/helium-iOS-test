@@ -1,0 +1,26 @@
+name: Build Helium IPA
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode.app
+      - name: Compile and Archive App
+        run: |
+          xcodebuild archive \
+            -scheme Helium \
+            -archivePath ./build/Helium.xcarchive \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Create Unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -r ./build/Helium.xcarchive/Products/Applications/Helium.app ./Payload/
+          zip -r Helium.ipa Payload
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Helium-IPA
+          path: Helium.ipa
